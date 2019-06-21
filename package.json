@@ -1,0 +1,18 @@
+{
+  "name": "hackathon",
+  "version": "1.0.0",
+  "description": "Submission for internal hackathon at Pratilipi",
+  "main": "server.js",
+  "scripts": {
+    "start": "node bin/www"
+  },
+  "author": "Avinash",
+  "license": "ISC",
+  "homepage": "https://github.com/Pratilipi/ecs-collection#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.5.14",
+    "short-uuid": "^3.1.1"
+  }
+}
