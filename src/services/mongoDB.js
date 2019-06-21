@@ -5,6 +5,12 @@ const QuestionMeta = require('../models/questionMeta');
 const User = require('../models/user');
 const uuid = require('short-uuid');
 
+const genericProjections = {
+    createdAt: 0,
+    updatedAt: 0,
+    __v: 0
+};
+
 class DbService {
     static async createQuestion(question) {
         const questionId = uuid.generate();
@@ -16,7 +22,6 @@ class DbService {
             language
         } = question;
         const user = await User.findOne({ userId }, { _id: 1 });
-        console.log(user);
         return Question.create({
             questionId,
             text,
@@ -28,25 +33,20 @@ class DbService {
         .then(question => Question
             .findById(
                 question._id,
-                {
-                    _id: 0,
-                    answer: 0,
-                    questions: 0,
-                    createdAt: 0,
-                    updatedAt: 0,
-                    __v: 0 
-                }
+                { ...genericProjections }
             )
             .populate({
                 path: 'asker',
-                select: {
-                    _id: 0,
-                    questions: 0,
-                    createdAt: 0,
-                    updatedAt: 0,
-                    __v: 0
-                }
-            }));
+                select: { ...genericProjections, _id: 0, questions: 0 }
+            })
+        );
+    }
+
+    static async addQuestionToUser({ userId, questionRef }) {
+        return User.findOneAndUpdate(
+            { userId },
+            { $addToSet: { questions: mongoose.Types.ObjectId(questionRef) } }
+        );
     }
 
     static async addQuestioToMeta(question) {
@@ -54,6 +54,37 @@ class DbService {
         return QuestionMeta.create({
             questionId, domain
         });
+    }
+
+    static async getQuestions({ language, domain }) {
+        return Question.find(
+            { language, domain },
+            { ...genericProjections, answer: 0, _id: 0 }
+        ).populate({
+            path: 'asker',
+            select: { ...genericProjections, _id: 0, questions: 0 }
+        });
+    }
+
+    static async getQuestionById(questionId) {
+        return Question.findOne(
+            { questionId },
+            { ...genericProjections, _id: 0 }
+        ).populate({
+            path: 'asker',
+            select: { ...genericProjections, _id: 0, questions: 0 }
+        });
+    }
+
+    static getUser(userId) {
+        return User.findOne(
+            { userId },
+            { ...genericProjections, _id: 0 }
+        )
+        .populate({
+            path: 'questions',
+            select: { ...genericProjections, _id: 0, asker: 0 }
+        })
     }
 }
 
