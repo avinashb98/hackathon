@@ -96,6 +96,42 @@ class DbService {
             { projection: { ...genericProjections, _id: 0 }, new: true }
         );
     }
+
+    static async getProfessional(professionalId) {
+        return Professional.findOne(
+            { professionalId },
+            { ...genericProjections }
+        )
+        .populate({
+            path: 'questions',
+            select: { ...genericProjections, _id: 0, asker: 0 }
+        })
+    }
+
+    static async answerQuestion(answer) {
+        const {
+            questionId,
+            videoUrl,
+            language,
+            answerer,
+            text
+        } = answer;
+        const answerId = uuid.generate();
+        return Question.findOneAndUpdate(
+            { questionId },
+            {
+                'answer.answerId': answerId,
+                'answer.videoUrl': videoUrl,
+                'answer.language': language,
+                'answer.answerer': mongoose.Types.ObjectId(answerer),
+                'answer.text': text
+            },
+            { projection: { ...genericProjections, _id: 0 }, new: true }
+        ).populate({
+            path: 'answer.answerer',
+            select: { _id: 0, name: 1 }
+        });
+    }
 }
 
 module.exports = DbService;

@@ -18,6 +18,31 @@ class ProfessionalController {
             data: question
         });
     }
+
+    static async answerQuestion(req, res) {
+        const {
+            questionId,
+            videoUrl,
+            language,
+            professionalId,
+            text
+        } = req.body;
+
+        const professional = await dbService.getProfessional(professionalId);
+        const answerer = professional._id;
+        const answer = await dbService.answerQuestion({
+            questionId,
+            videoUrl,
+            language,
+            text,
+            answerer
+        });
+
+        res.status(200).json({
+            message: 'Question Successfully answered',
+            data: answer
+        });
+    }
 }
 
 module.exports = ProfessionalController;
