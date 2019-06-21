@@ -1,3 +1,4 @@
+require('dotenv').config();
 require('../config/db/mongodb');
 const uuid = require('short-uuid');
 const Professional = require('../src/models/professional');
@@ -18,11 +19,11 @@ const createProfessional = async (user) => {
 (() => {
     setTimeout(async () => {
         await createProfessional({
-            name: 'Kshitij',
+            name: 'Albert Einstein',
             language: 'English',
-            domain: 'Mathematics',
-            qualifications: ['B.Tech in Electronics and Communication Engineering'],
-            imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/7e/Circle-icons-profile.svg'
+            domain: 'Physics',
+            qualifications: ['PhD'],
+            imageUrl: 'https://en.wikiquote.org/wiki/Albert_Einstein#/media/File:Albert_Einstein_Head.jpg'
         });
         console.log('Professional Created');
     }, 3000);

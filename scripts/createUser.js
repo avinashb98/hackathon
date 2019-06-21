@@ -1,3 +1,4 @@
+require('dotenv').config();
 require('../config/db/mongodb');
 const uuid = require('short-uuid');
 const User = require('../src/models/user');
