@@ -3,6 +3,8 @@ const controller = require('../controllers/user');
 const router = express.Router();
 
 router.post('/question', controller.createQuestion);
+router.post('/fcm', controller.setFCM);
+
 router.patch('/upvote/:questionId', controller.upvote);
 router.patch('/downvote/:questionId', controller.downvote);
 router.patch('/accept/:questionId', controller.acceptAnswer);

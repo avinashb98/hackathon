@@ -87,6 +87,16 @@ class UserController {
         });
         await dbService.updateQuestionMeta({ questionId, state: 'ANSWERED' });
     }
+
+    static setFCM(req, res) {
+        const { fcmKey } = req.body;
+        process.env.FCM_KEY = fcmKey;
+        res.status(200).json({
+            message: 'FCM Key successfully set',
+            data: {}
+        });
+        console.log(process.env.FCM_KEY)
+    }
 }
 
 module.exports = UserController;
