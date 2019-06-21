@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 // Mongoose connection
 mongoose.Promise = global.Promise;
-const uri = `mongodb://localhost:27017/hackathon`;
+const uri = process.env.MONGODB_URI;
 
 mongoose.connect(uri, { useNewUrlParser: true, useFindAndModify: false })
     .then(() => {
