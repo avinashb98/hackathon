@@ -146,6 +146,34 @@ class DbService {
             { $addToSet: { questions: mongoose.Types.ObjectId(questionRef) } }
         );
     }
+
+    /********************************************************************** */
+
+    static async upvote(questionId) {
+        return Question.findOneAndUpdate(
+            { questionId },
+            { $inc: { 'answer.upvotes': 1 } },
+            {
+                new: true,
+                projection: {
+                    ...genericProjections, _id: 0, asker: 0
+                }
+            }
+        );
+    }
+
+    static async downvote(questionId) {
+        return Question.findOneAndUpdate(
+            { questionId },
+            { $inc: { 'answer.downvotes': 1 } },
+            {
+                new: true,
+                projection: {
+                    ...genericProjections, _id: 0, asker: 0
+                }
+            }
+        );
+    }
 }
 
 module.exports = DbService;

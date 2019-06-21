@@ -56,6 +56,26 @@ class UserController {
             data: user
         });
     }
+
+    static async upvote(req, res) {
+        const { questionId } = req.params;
+
+        const question = await dbService.upvote(questionId);
+        res.status(200).json({
+            message: 'Answer Upvoted',
+            data: question
+        });
+    }
+
+    static async downvote(req, res) {
+        const { questionId } = req.params;
+
+        const question = await dbService.downvote(questionId);
+        res.status(200).json({
+            message: 'Answer Downvoted',
+            data: question
+        });
+    }
 }
 
 module.exports = UserController;
