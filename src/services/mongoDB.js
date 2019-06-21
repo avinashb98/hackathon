@@ -42,6 +42,19 @@ class DbService {
         );
     }
 
+    static async acceptAnswer(questionId) {
+        return Question.findOneAndUpdate(
+            { questionId },
+            { 'answer.isAccepted': true },
+            {
+                new: true,
+                projection: {
+                    ...genericProjections, _id: 0, asker: 0
+                }
+            }
+        );
+    }
+
     static async addQuestionToUser({ userId, questionRef }) {
         return User.findOneAndUpdate(
             { userId },

@@ -76,6 +76,16 @@ class UserController {
             data: question
         });
     }
+
+    static async acceptAnswer(req, res) {
+        const { questionId } = req.params;
+
+        const question = await dbService.acceptAnswer(questionId);
+        res.status(200).json({
+            message: 'Answer Accepted',
+            data: question
+        });
+    }
 }
 
 module.exports = UserController;
