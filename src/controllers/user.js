@@ -4,8 +4,9 @@ const dbService = require('../services/mongoDB');
 class UserController {
     static async createQuestion(req, res) {
         const {
-            text, imageUrl, domain, userId, language
+            text, imageUrl, domain, asker, language
         } = req.body;
+        const { userId } = asker;
         const question = await dbService.createQuestion({ text, imageUrl, domain, userId, language });
         res.status(201).json({
             message: 'Question created successfully',
