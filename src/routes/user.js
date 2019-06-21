@@ -9,6 +9,7 @@ router.patch('/upvote/:questionId', controller.upvote);
 router.patch('/downvote/:questionId', controller.downvote);
 router.patch('/accept/:questionId', controller.acceptAnswer);
 
+router.get('/search', controller.searchQuestions);
 router.get('/profile/:userId', controller.getUser);
 router.get('/questions', controller.getQuestions);
 router.get('/question/:questionId', controller.getQuestionById);

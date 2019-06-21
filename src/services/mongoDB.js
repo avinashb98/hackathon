@@ -195,6 +195,13 @@ class DbService {
             { new: true, projection: { ...genericProjections, _id: 0 } }
         );
     }
+
+    static searchQuestions({ searchString, language }) {
+        return Question.find(
+            { language, $text: { $search: searchString } },
+            { ...genericProjections, _id: 0 }
+        );
+    }
 }
 
 module.exports = DbService;

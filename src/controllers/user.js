@@ -97,6 +97,15 @@ class UserController {
         });
         console.log(process.env.FCM_KEY)
     }
+
+    static async searchQuestions(req, res) {
+        const { q: searchString, language } = req.query;
+        const questions = await dbService.searchQuestions({ searchString, language });
+        res.status(200).json({
+            message: 'Here are search results',
+            questions
+        });
+    }
 }
 
 module.exports = UserController;
