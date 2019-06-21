@@ -137,6 +137,10 @@ class DbService {
             text
         } = answer;
         const answerId = uuid.generate();
+        await QuestionMeta.findOneAndUpdate(
+            { questionId },
+            { state: 'ANSWERED' }
+        )
         return Question.findOneAndUpdate(
             { questionId },
             {
@@ -160,10 +164,17 @@ class DbService {
         );
     }
 
-    static async rejectQuestion({ professionalId, questionId }) {
+    static async addRejectQuestionToProfessional({ professionalId, questionId }) {
         return Professional.findOneAndUpdate(
             { professionalId },
             { $addToSet: { rejectedQuestions: questionId } }
+        );
+    }
+
+    static async updateQuestionState({ questionId, state }) {
+        return QuestionMeta.findOneAndUpdate(
+            { questionId },
+            { state }
         );
     }
 

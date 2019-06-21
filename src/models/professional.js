@@ -27,6 +27,10 @@ const ProfessionalSchema = new Schema({
         type: String,
         default: []
     }],
+    rejectedQuestions: [{
+        type: String,
+        default: []
+    }],
     questions: [{
         type: Schema.Types.ObjectId,
         ref: 'Question',

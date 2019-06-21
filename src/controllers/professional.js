@@ -13,8 +13,11 @@ class ProfessionalController {
     }
 
     static async poll(req, res) {
-        const { language, domain } = req.query;
-        const questionMeta = await dbService.poll({ language, domain });
+        const { language, domain, professionalId } = req.query;
+        const professional = await dbService.getProfessional(professionalId);
+        const except = professional.rejectedQuestions;
+        console.log(except);
+        const questionMeta = await dbService.poll({ language, domain, except });
         if (!questionMeta) {
             res.status(404).json({
                 message: 'No questions found',
@@ -64,10 +67,22 @@ class ProfessionalController {
                 questionId,
                 state: 'ANSWERED'
             });
-            console.log(response);   
+            console.log(response);
         } catch (error) {
             console.log(error);
         }
+    }
+
+    static async rejectQuestion(req, res) {
+        const { professionalId, questionId } = req.body;
+
+        const question = await dbService.addRejectQuestionToProfessional({ professionalId, questionId });
+        console.log(question);
+        res.status(200).json({
+            message: 'Question rejected',
+            data: {}
+        });
+        await dbService.updateQuestionState({ questionId, state: 'OPEN' });
     }
 }
 
