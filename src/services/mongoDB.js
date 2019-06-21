@@ -109,9 +109,9 @@ class DbService {
 
     /*****************************************************************************************/
 
-    static async poll({ language, domain }) {
+    static async poll({ language, domain, except }) {
         return QuestionMeta.findOneAndUpdate(
-            { language, domain, state: 'OPEN' },
+            { language, domain, state: 'OPEN', questionId: { $nin: except } },
             { state: 'ACTIVE' },
             { projection: { ...genericProjections, _id: 0 }, new: true }
         );
@@ -160,6 +160,13 @@ class DbService {
         );
     }
 
+    static async rejectQuestion({ professionalId, questionId }) {
+        return Professional.findOneAndUpdate(
+            { professionalId },
+            { $addToSet: { rejectedQuestions: questionId } }
+        );
+    }
+
     /********************************************************************** */
 
     static async upvote(questionId) {
@@ -200,7 +207,11 @@ class DbService {
         return Question.find(
             { language, $text: { $search: searchString } },
             { ...genericProjections, _id: 0 }
-        );
+        )
+        .populate({
+            path: 'asker',
+            select: { ...genericProjections, _id: 0, questions: 0 }
+        });
     }
 }
 
