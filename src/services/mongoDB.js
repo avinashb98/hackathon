@@ -187,6 +187,14 @@ class DbService {
             }
         );
     }
+
+    static updateQuestionMeta({ questionId, state }) {
+        return QuestionMeta.findOneAndUpdate(
+            { questionId },
+            { state },
+            { new: true, projection: { ...genericProjections, _id: 0 } }
+        );
+    }
 }
 
 module.exports = DbService;

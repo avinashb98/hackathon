@@ -85,6 +85,7 @@ class UserController {
             message: 'Answer Accepted',
             data: question
         });
+        await dbService.updateQuestionMeta({ questionId, state: 'ANSWERED' });
     }
 }
 
