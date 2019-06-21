@@ -11,6 +11,10 @@ const QuestionMetaSchema = new Schema({
         type: String,
         required: true
     },
+    language: {
+        type: String,
+        required: true
+    },
     state: {
         type: String,
         enum: ['OPEN', 'ACTIVE', 'ANSWERED'],
