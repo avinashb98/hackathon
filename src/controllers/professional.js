@@ -1,5 +1,6 @@
 const Professional = require('../models/professional');
 const dbService = require('../services/mongoDB');
+const sendNotification = require('../services/notification');
 
 class ProfessionalController {
     static async getProfessional(req, res) {
@@ -56,6 +57,17 @@ class ProfessionalController {
             professionalId,
             questionRef: question._id
         });
+        try {
+            const response = await sendNotification({
+                title: 'Question Status Update',
+                message: 'The status of the question is updated',
+                questionId,
+                state: 'ANSWERED'
+            });
+            console.log(response);   
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
 
