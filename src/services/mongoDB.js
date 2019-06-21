@@ -76,6 +76,13 @@ class DbService {
         });
     }
 
+    static async getQuestionRefById(questionId) {
+        return Question.findOne(
+            { questionId },
+            { _id: 1 }
+        );
+    }
+
     static getUser(userId) {
         return User.findOne(
             { userId },
@@ -131,6 +138,13 @@ class DbService {
             path: 'answer.answerer',
             select: { _id: 0, name: 1 }
         });
+    }
+
+    static async addQuestionToProfessional({ professionalId, questionRef }) {
+        return Professional.findOneAndUpdate(
+            { professionalId },
+            { $addToSet: { questions: mongoose.Types.ObjectId(questionRef) } }
+        );
     }
 }
 

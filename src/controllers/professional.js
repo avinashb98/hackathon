@@ -2,6 +2,15 @@ const Professional = require('../models/professional');
 const dbService = require('../services/mongoDB');
 
 class ProfessionalController {
+    static async getProfessional(req, res) {
+        const { professionalId } = req.params;
+        const professional = await dbService.getProfessional(professionalId);
+        res.status(200).json({
+            message: 'Professional\'s profile',
+            data: professional
+        });
+    }
+
     static async poll(req, res) {
         const { language, domain } = req.query;
         const questionMeta = await dbService.poll({ language, domain });
@@ -41,6 +50,11 @@ class ProfessionalController {
         res.status(200).json({
             message: 'Question Successfully answered',
             data: answer
+        });
+        const question = await dbService.getQuestionRefById(questionId);
+        await dbService.addQuestionToProfessional({
+            professionalId,
+            questionRef: question._id
         });
     }
 }
