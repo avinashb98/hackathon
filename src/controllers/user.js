@@ -19,7 +19,7 @@ class UserController {
         });
         await Promise.all([
             dbService.addQuestioToMeta(question),
-            dbService.addQuestionToUser({ questionRef: question._id, userId })
+            dbService.addQuestionToUser({ questionRef: question._id, userId, language: question.language })
         ]);
         console.log('Question added to meta and pushed to user');
     }

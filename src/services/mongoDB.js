@@ -50,9 +50,9 @@ class DbService {
     }
 
     static async addQuestioToMeta(question) {
-        const { questionId, domain } = question;
+        const { questionId, domain, language } = question;
         return QuestionMeta.create({
-            questionId, domain
+            questionId, domain, language
         });
     }
 
@@ -85,6 +85,16 @@ class DbService {
             path: 'questions',
             select: { ...genericProjections, _id: 0, asker: 0 }
         })
+    }
+
+    /*****************************************************************************************/
+
+    static async poll({ language, domain }) {
+        return QuestionMeta.findOneAndUpdate(
+            { language, domain, state: 'OPEN' },
+            { state: 'ACTIVE' },
+            { projection: { ...genericProjections, _id: 0 }, new: true }
+        );
     }
 }
 

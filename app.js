@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const userRouter = require('./src/routes/user');
+const professionalRouter = require('./src/routes/professional');
+
 // Db configs
 require('./config/db/mongodb');
 
@@ -25,5 +27,6 @@ app.get('/health', (req, res) => {
 });
 
 app.use('/user', userRouter);
+app.use('/professional', professionalRouter);
 
 module.exports = app;
