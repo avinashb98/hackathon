@@ -1,4 +1,3 @@
-const Professional = require('../models/professional');
 const dbService = require('../services/mongoDB');
 const sendNotification = require('../services/notification');
 
@@ -16,7 +15,6 @@ class ProfessionalController {
         const { language, domain, professionalId } = req.query;
         const professional = await dbService.getProfessional(professionalId);
         const except = professional.rejectedQuestions;
-        console.log(except);
         const questionMeta = await dbService.poll({ language, domain, except });
         if (!questionMeta) {
             res.status(404).json({
