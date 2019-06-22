@@ -99,8 +99,8 @@ class UserController {
     }
 
     static async searchQuestions(req, res) {
-        const { q: searchString, language } = req.query;
-        const questions = await dbService.searchQuestions({ searchString, language });
+        const { domain, language } = req.query;
+        const questions = await dbService.searchQuestions({ domain, language });
         res.status(200).json({
             message: 'Here are search results',
             questions

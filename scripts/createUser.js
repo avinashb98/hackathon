@@ -15,7 +15,7 @@ const createUser = async (user) => {
 
 (() => {
     setTimeout(async () => {
-        await createUser({ name: 'Avinash', language: 'English' });
+        await createUser({ name: 'Avinash', language: 'Tamil' });
         console.log('User Created');
     }, 3000);
 })();

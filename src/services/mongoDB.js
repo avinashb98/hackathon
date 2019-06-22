@@ -226,9 +226,9 @@ class DbService {
         );
     }
 
-    static searchQuestions({ searchString, language }) {
+    static searchQuestions({ domain, language }) {
         return Question.find(
-            { language, $text: { $search: searchString } },
+            { language, domain },
             { ...genericProjections, _id: 0 }
         )
         .populate({

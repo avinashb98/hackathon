@@ -19,11 +19,11 @@ const createProfessional = async (user) => {
 (() => {
     setTimeout(async () => {
         await createProfessional({
-            name: 'Albert Einstein',
-            language: 'English',
-            domain: 'Physics',
+            name: 'Dileepan',
+            language: 'Tamil',
+            domain: 'Literature',
             qualifications: ['PhD'],
-            imageUrl: 'https://en.wikiquote.org/wiki/Albert_Einstein#/media/File:Albert_Einstein_Head.jpg'
+            imageUrl: 'https://en.wikipedia.org/wiki/Srinivasa_Ramanujan#/media/File:Srinivasa_Ramanujan_-_OPC_-_1.jpg'
         });
         console.log('Professional Created');
     }, 3000);
