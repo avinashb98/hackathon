@@ -6,7 +6,6 @@ const User = require('../models/user');
 const uuid = require('short-uuid');
 
 const genericProjections = {
-    createdAt: 0,
     updatedAt: 0,
     __v: 0
 };
