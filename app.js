@@ -19,6 +19,9 @@ app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
     extended: true
 }));
 
+// Mock Details
+process.env.DOMAIN = 'Physics';
+process.env.LANGUAGE = 'English'
 
 // Router Initialization
 app.get('/health', (req, res) => {

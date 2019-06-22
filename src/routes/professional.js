@@ -7,4 +7,7 @@ router.patch('/answer/reject', controller.rejectQuestion);
 router.get('/profile/:professionalId', controller.getProfessional);
 router.get('/poll', controller.poll);
 
+router.patch('/mock', controller.registerMockDetails);
+router.get('/mock', controller.getMockUsers);
+
 module.exports = router;

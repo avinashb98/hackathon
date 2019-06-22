@@ -12,6 +12,18 @@ const genericProjections = {
 };
 
 class DbService {
+    static async getMockUsers() {
+        const domain = process.env.DOMAIN;
+        const language = process.env.LANGUAGE;
+        const user = await User.findOne({ language }, { _id: 0, userId: 1 });
+        const professional = await Professional.findOne({ domain, language }, { _id: 0, professionalId: 1 });
+        return {
+            userId: user.userId,
+            professionalId: professional.professionalId,
+            language,
+            domain
+        }
+    }
     static async createQuestion(question) {
         const questionId = uuid.generate();
         const {

@@ -84,6 +84,24 @@ class ProfessionalController {
         });
         await dbService.updateQuestionState({ questionId, state: 'OPEN' });
     }
+
+    static registerMockDetails(req, res) {
+        const { domain, language } = req.body;
+        process.env.DOMAIN = domain;
+        process.env.LANGUAGE = language;
+        res.status(200).json({
+            message: 'Successfully registered mock details'
+        });
+        console.log(process.env.DOMAIN, process.env.LANGUAGE);
+    }
+
+    static async getMockUsers(req, res) {
+        const mockUsers = await dbService.getMockUsers();
+        res.status(200).json({
+            message: 'Mock Users',
+            data: mockUsers
+        });
+    }
 }
 
 module.exports = ProfessionalController;
